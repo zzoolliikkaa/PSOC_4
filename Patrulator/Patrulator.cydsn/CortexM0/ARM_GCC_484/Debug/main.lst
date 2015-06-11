@@ -1,0 +1,803 @@
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"main.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.comm	rfid_data_u16,10,4
+  18              		.global	idx
+  19              		.bss
+  20              		.type	idx, %object
+  21              		.size	idx, 1
+  22              	idx:
+  23 0000 00       		.space	1
+  24              		.global	i
+  25              		.type	i, %object
+  26              		.size	i, 1
+  27              	i:
+  28 0001 00       		.space	1
+  29              		.global	rfid_data_received
+  30              		.type	rfid_data_received, %object
+  31              		.size	rfid_data_received, 1
+  32              	rfid_data_received:
+  33 0002 00       		.space	1
+  34              		.global	temp
+  35              		.type	temp, %object
+  36              		.size	temp, 1
+  37              	temp:
+  38 0003 00       		.space	1
+  39              		.section	.text.ResetISR_Handler,"ax",%progbits
+  40              		.align	2
+  41              		.global	ResetISR_Handler
+  42              		.code	16
+  43              		.thumb_func
+  44              		.type	ResetISR_Handler, %function
+  45              	ResetISR_Handler:
+  46              	.LFB33:
+  47              		.file 1 ".\\main.c"
+   1:.\main.c      **** /******************************************************************************
+   2:.\main.c      **** * Project Name		: Bootloadable Blinking LED
+   3:.\main.c      **** * File Name			: main.c
+   4:.\main.c      **** * Version 			: 1.0
+   5:.\main.c      **** * Device Used		: CY8C4245AXI-483
+   6:.\main.c      **** * Software Used		: PSoC Creator 3.1
+   7:.\main.c      **** * Compiler    		: ARMGCC 4.8.4, ARM RVDS Generic, ARM MDK Generic
+   8:.\main.c      **** * Related Hardware	: CY8CKIT-049-42xx PSoC 4 Prototyping Kit 
+   9:.\main.c      **** *
+  10:.\main.c      **** ********************************************************************************
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 2
+
+
+  11:.\main.c      **** * Copyright (2015), Cypress Semiconductor Corporation. All Rights Reserved.
+  12:.\main.c      **** ********************************************************************************
+  13:.\main.c      **** * This software is owned by Cypress Semiconductor Corporation (Cypress)
+  14:.\main.c      **** * and is protected by and subject to worldwide patent protection (United
+  15:.\main.c      **** * States and foreign), United States copyright laws and international treaty
+  16:.\main.c      **** * provisions. Cypress hereby grants to licensee a personal, non-exclusive,
+  17:.\main.c      **** * non-transferable license to copy, use, modify, create derivative works of,
+  18:.\main.c      **** * and compile the Cypress Source Code and derivative works for the sole
+  19:.\main.c      **** * purpose of creating custom software in support of licensee product to be
+  20:.\main.c      **** * used only in conjunction with a Cypress integrated circuit as specified in
+  21:.\main.c      **** * the applicable agreement. Any reproduction, modification, translation,
+  22:.\main.c      **** * compilation, or representation of this software except as specified above 
+  23:.\main.c      **** * is prohibited without the express written permission of Cypress.
+  24:.\main.c      **** *
+  25:.\main.c      **** * Disclaimer: CYPRESS MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, WITH 
+  26:.\main.c      **** * REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  27:.\main.c      **** * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  28:.\main.c      **** * Cypress reserves the right to make changes without further notice to the 
+  29:.\main.c      **** * materials described herein. Cypress does not assume any liability arising out 
+  30:.\main.c      **** * of the application or use of any product or circuit described herein. Cypress 
+  31:.\main.c      **** * does not authorize its products for use as critical components in life-support 
+  32:.\main.c      **** * systems where a malfunction or failure may reasonably be expected to result in 
+  33:.\main.c      **** * significant injury to the user. The inclusion of Cypress' product in a life-
+  34:.\main.c      **** * support systems application implies that the manufacturer assumes all risk of 
+  35:.\main.c      **** * such use and in doing so indemnifies Cypress against all charges. 
+  36:.\main.c      **** *
+  37:.\main.c      **** * Use of this Software may be limited by and subject to the applicable Cypress
+  38:.\main.c      **** * software license agreement. 
+  39:.\main.c      **** *******************************************************************************/
+  40:.\main.c      **** 
+  41:.\main.c      **** /******************************************************************************
+  42:.\main.c      **** *                           THEORY OF OPERATION
+  43:.\main.c      **** * This is a blinking LED project. A PWM component drives the pin to blink the 
+  44:.\main.c      **** * LED at regular intervals. This project contains a bootloadable component so 
+  45:.\main.c      **** * that it can be bootloaded into PSoC 4 which has a bootloader already programmed 
+  46:.\main.c      **** * into it.
+  47:.\main.c      **** * Default UART Port Configuration for bootloading the PSoC 4 in CY8CKIT-049-42xx
+  48:.\main.c      **** * Baud Rate : 115200 bps
+  49:.\main.c      **** * Data Bits : 8
+  50:.\main.c      **** * Stop Bits : 1
+  51:.\main.c      **** * Parity    : None
+  52:.\main.c      **** ******************************************************************************/
+  53:.\main.c      **** #include <project.h>
+  54:.\main.c      **** #include <UART_tx.h>
+  55:.\main.c      **** 
+  56:.\main.c      **** 
+  57:.\main.c      **** uint16 rfid_data_u16[5];
+  58:.\main.c      **** uint8 idx = 0;
+  59:.\main.c      **** uint8 i = 0;
+  60:.\main.c      **** uint8 rfid_data_received = 0; // False
+  61:.\main.c      **** uint8 temp = 0;
+  62:.\main.c      **** /* Prototype the ISR Handler */
+  63:.\main.c      **** CY_ISR_PROTO( ResetISR_Handler );
+  64:.\main.c      **** 
+  65:.\main.c      **** /* Implementation of the ISR Handler */
+  66:.\main.c      **** CY_ISR( ResetISR_Handler )
+  67:.\main.c      **** {
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 3
+
+
+  48              		.loc 1 67 0
+  49              		.cfi_startproc
+  50 0000 80B5     		push	{r7, lr}
+  51              		.cfi_def_cfa_offset 8
+  52              		.cfi_offset 7, -8
+  53              		.cfi_offset 14, -4
+  54 0002 00AF     		add	r7, sp, #0
+  55              		.cfi_def_cfa_register 7
+  68:.\main.c      ****     /* Force BootLoader Restart */
+  69:.\main.c      ****     Bootloadable_Load();
+  56              		.loc 1 69 0
+  57 0004 FFF7FEFF 		bl	Bootloadable_Load
+  70:.\main.c      **** }
+  58              		.loc 1 70 0
+  59 0008 BD46     		mov	sp, r7
+  60              		@ sp needed
+  61 000a 80BD     		pop	{r7, pc}
+  62              		.cfi_endproc
+  63              	.LFE33:
+  64              		.size	ResetISR_Handler, .-ResetISR_Handler
+  65              		.section	.text.main,"ax",%progbits
+  66              		.align	2
+  67              		.global	main
+  68              		.code	16
+  69              		.thumb_func
+  70              		.type	main, %function
+  71              	main:
+  72              	.LFB34:
+  71:.\main.c      **** 
+  72:.\main.c      **** int main()
+  73:.\main.c      **** {
+  73              		.loc 1 73 0
+  74              		.cfi_startproc
+  75 0000 80B5     		push	{r7, lr}
+  76              		.cfi_def_cfa_offset 8
+  77              		.cfi_offset 7, -8
+  78              		.cfi_offset 14, -4
+  79 0002 00AF     		add	r7, sp, #0
+  80              		.cfi_def_cfa_register 7
+  74:.\main.c      ****     /* Start the ResetTimer - only runs when SW_1 is pressed */
+  75:.\main.c      ****     Reset_Timer_Start();
+  81              		.loc 1 75 0
+  82 0004 FFF7FEFF 		bl	Reset_Timer_Start
+  76:.\main.c      ****     /* Install the ISR handler and make sure none are pending */
+  77:.\main.c      ****     Reset_ISR_ClearPending();
+  83              		.loc 1 77 0
+  84 0008 FFF7FEFF 		bl	Reset_ISR_ClearPending
+  78:.\main.c      ****     Reset_ISR_StartEx( ResetISR_Handler );
+  85              		.loc 1 78 0
+  86 000c 2A4B     		ldr	r3, .L5
+  87 000e 181C     		mov	r0, r3
+  88 0010 FFF7FEFF 		bl	Reset_ISR_StartEx
+  79:.\main.c      ****     
+  80:.\main.c      ****     RFID_REG_Start();    
+  89              		.loc 1 80 0
+  90 0014 FFF7FEFF 		bl	RFID_REG_Start
+  81:.\main.c      ****     Timer_1_Start();
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 4
+
+
+  91              		.loc 1 81 0
+  92 0018 FFF7FEFF 		bl	Timer_1_Start
+  82:.\main.c      ****     Count_Bits_Start();
+  93              		.loc 1 82 0
+  94 001c FFF7FEFF 		bl	Count_Bits_Start
+  83:.\main.c      ****     Count_Bits_WriteCounter(8);
+  95              		.loc 1 83 0
+  96 0020 0820     		mov	r0, #8
+  97 0022 FFF7FEFF 		bl	Count_Bits_WriteCounter
+  84:.\main.c      ****     RFID_ISR_Start();
+  98              		.loc 1 84 0
+  99 0026 FFF7FEFF 		bl	RFID_ISR_Start
+  85:.\main.c      ****     UART_Start();
+ 100              		.loc 1 85 0
+ 101 002a FFF7FEFF 		bl	UART_Start
+  86:.\main.c      **** 	UART_SpiUartClearRxBuffer();
+ 102              		.loc 1 86 0
+ 103 002e FFF7FEFF 		bl	UART_SpiUartClearRxBuffer
+  87:.\main.c      **** 	UART_SpiUartClearTxBuffer();    
+ 104              		.loc 1 87 0
+ 105 0032 FFF7FEFF 		bl	UART_SpiUartClearTxBuffer
+  88:.\main.c      ****     
+  89:.\main.c      ****     CyGlobalIntEnable; 
+ 106              		.loc 1 89 0
+ 107              	@ 89 ".\main.c" 1
+ 108 0036 62B6     		CPSIE   i
+ 109              	@ 0 "" 2
+  90:.\main.c      ****     CyDelay(5000);
+ 110              		.loc 1 90 0
+ 111              		.code	16
+ 112 0038 204B     		ldr	r3, .L5+4
+ 113 003a 181C     		mov	r0, r3
+ 114 003c FFF7FEFF 		bl	CyDelay
+  91:.\main.c      ****     
+  92:.\main.c      ****     temp = 'S';
+ 115              		.loc 1 92 0
+ 116 0040 1F4B     		ldr	r3, .L5+8
+ 117 0042 5322     		mov	r2, #83
+ 118 0044 1A70     		strb	r2, [r3]
+  93:.\main.c      ****     UART_SpiUartPutArray(&temp,1);
+ 119              		.loc 1 93 0
+ 120 0046 1E4B     		ldr	r3, .L5+8
+ 121 0048 181C     		mov	r0, r3
+ 122 004a 0121     		mov	r1, #1
+ 123 004c FFF7FEFF 		bl	UART_SpiUartPutArray
+  94:.\main.c      ****     
+  95:.\main.c      ****     i = 0;
+ 124              		.loc 1 95 0
+ 125 0050 1C4B     		ldr	r3, .L5+12
+ 126 0052 0022     		mov	r2, #0
+ 127 0054 1A70     		strb	r2, [r3]
+ 128              	.L4:
+  96:.\main.c      ****     for(;;)
+  97:.\main.c      ****     {       
+  98:.\main.c      ****         if (rfid_data_received == 1)
+ 129              		.loc 1 98 0
+ 130 0056 1C4B     		ldr	r3, .L5+16
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 5
+
+
+ 131 0058 1B78     		ldrb	r3, [r3]
+ 132 005a 012B     		cmp	r3, #1
+ 133 005c 2BD1     		bne	.L3
+  99:.\main.c      ****         {
+ 100:.\main.c      ****             Count_Bits_WriteCounter(8);
+ 134              		.loc 1 100 0
+ 135 005e 0820     		mov	r0, #8
+ 136 0060 FFF7FEFF 		bl	Count_Bits_WriteCounter
+ 101:.\main.c      ****             temp =  RFID_REG_GetIntStatus();
+ 137              		.loc 1 101 0
+ 138 0064 FFF7FEFF 		bl	RFID_REG_GetIntStatus
+ 139 0068 031C     		mov	r3, r0
+ 140 006a 1A1C     		mov	r2, r3
+ 141 006c 144B     		ldr	r3, .L5+8
+ 142 006e 1A70     		strb	r2, [r3]
+ 102:.\main.c      **** //            UART_SpiUartPutArray(&temp,1);
+ 103:.\main.c      ****             
+ 104:.\main.c      ****             temp = (( rfid_data_u16[0] & 0x01FEu ) >> 1 ) ;       
+ 143              		.loc 1 104 0
+ 144 0070 164B     		ldr	r3, .L5+20
+ 145 0072 1B88     		ldrh	r3, [r3]
+ 146 0074 1A1C     		mov	r2, r3
+ 147 0076 FF23     		mov	r3, #255
+ 148 0078 5B00     		lsl	r3, r3, #1
+ 149 007a 1340     		and	r3, r2
+ 150 007c 5B08     		lsr	r3, r3, #1
+ 151 007e DAB2     		uxtb	r2, r3
+ 152 0080 0F4B     		ldr	r3, .L5+8
+ 153 0082 1A70     		strb	r2, [r3]
+ 105:.\main.c      ****             UART_SpiUartPutArray(&temp,1);
+ 154              		.loc 1 105 0
+ 155 0084 0E4B     		ldr	r3, .L5+8
+ 156 0086 181C     		mov	r0, r3
+ 157 0088 0121     		mov	r1, #1
+ 158 008a FFF7FEFF 		bl	UART_SpiUartPutArray
+ 106:.\main.c      ****                     
+ 107:.\main.c      ****             rfid_data_received = 0;
+ 159              		.loc 1 107 0
+ 160 008e 0E4B     		ldr	r3, .L5+16
+ 161 0090 0022     		mov	r2, #0
+ 162 0092 1A70     		strb	r2, [r3]
+ 108:.\main.c      ****             idx = 0;
+ 163              		.loc 1 108 0
+ 164 0094 0E4B     		ldr	r3, .L5+24
+ 165 0096 0022     		mov	r2, #0
+ 166 0098 1A70     		strb	r2, [r3]
+ 109:.\main.c      ****             
+ 110:.\main.c      ****             i = i+1;
+ 167              		.loc 1 110 0
+ 168 009a 0A4B     		ldr	r3, .L5+12
+ 169 009c 1B78     		ldrb	r3, [r3]
+ 170 009e 0133     		add	r3, r3, #1
+ 171 00a0 DAB2     		uxtb	r2, r3
+ 172 00a2 084B     		ldr	r3, .L5+12
+ 173 00a4 1A70     		strb	r2, [r3]
+ 111:.\main.c      ****             if (i > 10)
+ 174              		.loc 1 111 0
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 6
+
+
+ 175 00a6 074B     		ldr	r3, .L5+12
+ 176 00a8 1B78     		ldrb	r3, [r3]
+ 177 00aa 0A2B     		cmp	r3, #10
+ 178 00ac 03D9     		bls	.L3
+ 112:.\main.c      ****             {
+ 113:.\main.c      ****                 CyDelay(100);
+ 179              		.loc 1 113 0
+ 180 00ae 6420     		mov	r0, #100
+ 181 00b0 FFF7FEFF 		bl	CyDelay
+ 114:.\main.c      ****             }
+ 115:.\main.c      ****         }
+ 116:.\main.c      ****     //CySysPmSleep();        
+ 117:.\main.c      ****     }
+ 182              		.loc 1 117 0
+ 183 00b4 CFE7     		b	.L4
+ 184              	.L3:
+ 185 00b6 CEE7     		b	.L4
+ 186              	.L6:
+ 187              		.align	2
+ 188              	.L5:
+ 189 00b8 00000000 		.word	ResetISR_Handler
+ 190 00bc 88130000 		.word	5000
+ 191 00c0 00000000 		.word	temp
+ 192 00c4 00000000 		.word	i
+ 193 00c8 00000000 		.word	rfid_data_received
+ 194 00cc 00000000 		.word	rfid_data_u16
+ 195 00d0 00000000 		.word	idx
+ 196              		.cfi_endproc
+ 197              	.LFE34:
+ 198              		.size	main, .-main
+ 199              		.text
+ 200              	.Letext0:
+ 201              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 202              		.section	.debug_info,"",%progbits
+ 203              	.Ldebug_info0:
+ 204 0000 23010000 		.4byte	0x123
+ 205 0004 0400     		.2byte	0x4
+ 206 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 207 000a 04       		.byte	0x4
+ 208 000b 01       		.uleb128 0x1
+ 209 000c 80000000 		.4byte	.LASF20
+ 210 0010 01       		.byte	0x1
+ 211 0011 74010000 		.4byte	.LASF21
+ 212 0015 0D010000 		.4byte	.LASF22
+ 213 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 214 001d 00000000 		.4byte	0
+ 215 0021 00000000 		.4byte	.Ldebug_line0
+ 216 0025 02       		.uleb128 0x2
+ 217 0026 01       		.byte	0x1
+ 218 0027 06       		.byte	0x6
+ 219 0028 5F010000 		.4byte	.LASF0
+ 220 002c 02       		.uleb128 0x2
+ 221 002d 01       		.byte	0x1
+ 222 002e 08       		.byte	0x8
+ 223 002f 1B000000 		.4byte	.LASF1
+ 224 0033 02       		.uleb128 0x2
+ 225 0034 02       		.byte	0x2
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 7
+
+
+ 226 0035 05       		.byte	0x5
+ 227 0036 3B010000 		.4byte	.LASF2
+ 228 003a 02       		.uleb128 0x2
+ 229 003b 02       		.byte	0x2
+ 230 003c 07       		.byte	0x7
+ 231 003d 4C010000 		.4byte	.LASF3
+ 232 0041 02       		.uleb128 0x2
+ 233 0042 04       		.byte	0x4
+ 234 0043 05       		.byte	0x5
+ 235 0044 32010000 		.4byte	.LASF4
+ 236 0048 02       		.uleb128 0x2
+ 237 0049 04       		.byte	0x4
+ 238 004a 07       		.byte	0x7
+ 239 004b 39000000 		.4byte	.LASF5
+ 240 004f 02       		.uleb128 0x2
+ 241 0050 08       		.byte	0x8
+ 242 0051 05       		.byte	0x5
+ 243 0052 00000000 		.4byte	.LASF6
+ 244 0056 02       		.uleb128 0x2
+ 245 0057 08       		.byte	0x8
+ 246 0058 07       		.byte	0x7
+ 247 0059 4B000000 		.4byte	.LASF7
+ 248 005d 03       		.uleb128 0x3
+ 249 005e 04       		.byte	0x4
+ 250 005f 05       		.byte	0x5
+ 251 0060 696E7400 		.ascii	"int\000"
+ 252 0064 02       		.uleb128 0x2
+ 253 0065 04       		.byte	0x4
+ 254 0066 07       		.byte	0x7
+ 255 0067 0E000000 		.4byte	.LASF8
+ 256 006b 04       		.uleb128 0x4
+ 257 006c 33000000 		.4byte	.LASF9
+ 258 0070 02       		.byte	0x2
+ 259 0071 B3       		.byte	0xb3
+ 260 0072 2C000000 		.4byte	0x2c
+ 261 0076 04       		.uleb128 0x4
+ 262 0077 7D010000 		.4byte	.LASF10
+ 263 007b 02       		.byte	0x2
+ 264 007c B4       		.byte	0xb4
+ 265 007d 3A000000 		.4byte	0x3a
+ 266 0081 02       		.uleb128 0x2
+ 267 0082 04       		.byte	0x4
+ 268 0083 04       		.byte	0x4
+ 269 0084 67000000 		.4byte	.LASF11
+ 270 0088 02       		.uleb128 0x2
+ 271 0089 08       		.byte	0x8
+ 272 008a 04       		.byte	0x4
+ 273 008b 45010000 		.4byte	.LASF12
+ 274 008f 02       		.uleb128 0x2
+ 275 0090 01       		.byte	0x1
+ 276 0091 08       		.byte	0x8
+ 277 0092 62000000 		.4byte	.LASF13
+ 278 0096 02       		.uleb128 0x2
+ 279 0097 04       		.byte	0x4
+ 280 0098 07       		.byte	0x7
+ 281 0099 6B010000 		.4byte	.LASF14
+ 282 009d 05       		.uleb128 0x5
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 8
+
+
+ 283 009e FC000000 		.4byte	.LASF15
+ 284 00a2 01       		.byte	0x1
+ 285 00a3 42       		.byte	0x42
+ 286 00a4 00000000 		.4byte	.LFB33
+ 287 00a8 0C000000 		.4byte	.LFE33-.LFB33
+ 288 00ac 01       		.uleb128 0x1
+ 289 00ad 9C       		.byte	0x9c
+ 290 00ae 06       		.uleb128 0x6
+ 291 00af 2E000000 		.4byte	.LASF16
+ 292 00b3 01       		.byte	0x1
+ 293 00b4 48       		.byte	0x48
+ 294 00b5 5D000000 		.4byte	0x5d
+ 295 00b9 00000000 		.4byte	.LFB34
+ 296 00bd D4000000 		.4byte	.LFE34-.LFB34
+ 297 00c1 01       		.uleb128 0x1
+ 298 00c2 9C       		.byte	0x9c
+ 299 00c3 07       		.uleb128 0x7
+ 300 00c4 76000000 		.4byte	0x76
+ 301 00c8 D3000000 		.4byte	0xd3
+ 302 00cc 08       		.uleb128 0x8
+ 303 00cd 96000000 		.4byte	0x96
+ 304 00d1 04       		.byte	0x4
+ 305 00d2 00       		.byte	0
+ 306 00d3 09       		.uleb128 0x9
+ 307 00d4 84010000 		.4byte	.LASF17
+ 308 00d8 01       		.byte	0x1
+ 309 00d9 39       		.byte	0x39
+ 310 00da C3000000 		.4byte	0xc3
+ 311 00de 05       		.uleb128 0x5
+ 312 00df 03       		.byte	0x3
+ 313 00e0 00000000 		.4byte	rfid_data_u16
+ 314 00e4 0A       		.uleb128 0xa
+ 315 00e5 69647800 		.ascii	"idx\000"
+ 316 00e9 01       		.byte	0x1
+ 317 00ea 3A       		.byte	0x3a
+ 318 00eb 6B000000 		.4byte	0x6b
+ 319 00ef 05       		.uleb128 0x5
+ 320 00f0 03       		.byte	0x3
+ 321 00f1 00000000 		.4byte	idx
+ 322 00f5 0A       		.uleb128 0xa
+ 323 00f6 6900     		.ascii	"i\000"
+ 324 00f8 01       		.byte	0x1
+ 325 00f9 3B       		.byte	0x3b
+ 326 00fa 6B000000 		.4byte	0x6b
+ 327 00fe 05       		.uleb128 0x5
+ 328 00ff 03       		.byte	0x3
+ 329 0100 00000000 		.4byte	i
+ 330 0104 09       		.uleb128 0x9
+ 331 0105 6D000000 		.4byte	.LASF18
+ 332 0109 01       		.byte	0x1
+ 333 010a 3C       		.byte	0x3c
+ 334 010b 6B000000 		.4byte	0x6b
+ 335 010f 05       		.uleb128 0x5
+ 336 0110 03       		.byte	0x3
+ 337 0111 00000000 		.4byte	rfid_data_received
+ 338 0115 09       		.uleb128 0x9
+ 339 0116 29000000 		.4byte	.LASF19
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 9
+
+
+ 340 011a 01       		.byte	0x1
+ 341 011b 3D       		.byte	0x3d
+ 342 011c 6B000000 		.4byte	0x6b
+ 343 0120 05       		.uleb128 0x5
+ 344 0121 03       		.byte	0x3
+ 345 0122 00000000 		.4byte	temp
+ 346 0126 00       		.byte	0
+ 347              		.section	.debug_abbrev,"",%progbits
+ 348              	.Ldebug_abbrev0:
+ 349 0000 01       		.uleb128 0x1
+ 350 0001 11       		.uleb128 0x11
+ 351 0002 01       		.byte	0x1
+ 352 0003 25       		.uleb128 0x25
+ 353 0004 0E       		.uleb128 0xe
+ 354 0005 13       		.uleb128 0x13
+ 355 0006 0B       		.uleb128 0xb
+ 356 0007 03       		.uleb128 0x3
+ 357 0008 0E       		.uleb128 0xe
+ 358 0009 1B       		.uleb128 0x1b
+ 359 000a 0E       		.uleb128 0xe
+ 360 000b 55       		.uleb128 0x55
+ 361 000c 17       		.uleb128 0x17
+ 362 000d 11       		.uleb128 0x11
+ 363 000e 01       		.uleb128 0x1
+ 364 000f 10       		.uleb128 0x10
+ 365 0010 17       		.uleb128 0x17
+ 366 0011 00       		.byte	0
+ 367 0012 00       		.byte	0
+ 368 0013 02       		.uleb128 0x2
+ 369 0014 24       		.uleb128 0x24
+ 370 0015 00       		.byte	0
+ 371 0016 0B       		.uleb128 0xb
+ 372 0017 0B       		.uleb128 0xb
+ 373 0018 3E       		.uleb128 0x3e
+ 374 0019 0B       		.uleb128 0xb
+ 375 001a 03       		.uleb128 0x3
+ 376 001b 0E       		.uleb128 0xe
+ 377 001c 00       		.byte	0
+ 378 001d 00       		.byte	0
+ 379 001e 03       		.uleb128 0x3
+ 380 001f 24       		.uleb128 0x24
+ 381 0020 00       		.byte	0
+ 382 0021 0B       		.uleb128 0xb
+ 383 0022 0B       		.uleb128 0xb
+ 384 0023 3E       		.uleb128 0x3e
+ 385 0024 0B       		.uleb128 0xb
+ 386 0025 03       		.uleb128 0x3
+ 387 0026 08       		.uleb128 0x8
+ 388 0027 00       		.byte	0
+ 389 0028 00       		.byte	0
+ 390 0029 04       		.uleb128 0x4
+ 391 002a 16       		.uleb128 0x16
+ 392 002b 00       		.byte	0
+ 393 002c 03       		.uleb128 0x3
+ 394 002d 0E       		.uleb128 0xe
+ 395 002e 3A       		.uleb128 0x3a
+ 396 002f 0B       		.uleb128 0xb
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 10
+
+
+ 397 0030 3B       		.uleb128 0x3b
+ 398 0031 0B       		.uleb128 0xb
+ 399 0032 49       		.uleb128 0x49
+ 400 0033 13       		.uleb128 0x13
+ 401 0034 00       		.byte	0
+ 402 0035 00       		.byte	0
+ 403 0036 05       		.uleb128 0x5
+ 404 0037 2E       		.uleb128 0x2e
+ 405 0038 00       		.byte	0
+ 406 0039 3F       		.uleb128 0x3f
+ 407 003a 19       		.uleb128 0x19
+ 408 003b 03       		.uleb128 0x3
+ 409 003c 0E       		.uleb128 0xe
+ 410 003d 3A       		.uleb128 0x3a
+ 411 003e 0B       		.uleb128 0xb
+ 412 003f 3B       		.uleb128 0x3b
+ 413 0040 0B       		.uleb128 0xb
+ 414 0041 27       		.uleb128 0x27
+ 415 0042 19       		.uleb128 0x19
+ 416 0043 11       		.uleb128 0x11
+ 417 0044 01       		.uleb128 0x1
+ 418 0045 12       		.uleb128 0x12
+ 419 0046 06       		.uleb128 0x6
+ 420 0047 40       		.uleb128 0x40
+ 421 0048 18       		.uleb128 0x18
+ 422 0049 9642     		.uleb128 0x2116
+ 423 004b 19       		.uleb128 0x19
+ 424 004c 00       		.byte	0
+ 425 004d 00       		.byte	0
+ 426 004e 06       		.uleb128 0x6
+ 427 004f 2E       		.uleb128 0x2e
+ 428 0050 00       		.byte	0
+ 429 0051 3F       		.uleb128 0x3f
+ 430 0052 19       		.uleb128 0x19
+ 431 0053 03       		.uleb128 0x3
+ 432 0054 0E       		.uleb128 0xe
+ 433 0055 3A       		.uleb128 0x3a
+ 434 0056 0B       		.uleb128 0xb
+ 435 0057 3B       		.uleb128 0x3b
+ 436 0058 0B       		.uleb128 0xb
+ 437 0059 49       		.uleb128 0x49
+ 438 005a 13       		.uleb128 0x13
+ 439 005b 11       		.uleb128 0x11
+ 440 005c 01       		.uleb128 0x1
+ 441 005d 12       		.uleb128 0x12
+ 442 005e 06       		.uleb128 0x6
+ 443 005f 40       		.uleb128 0x40
+ 444 0060 18       		.uleb128 0x18
+ 445 0061 9642     		.uleb128 0x2116
+ 446 0063 19       		.uleb128 0x19
+ 447 0064 00       		.byte	0
+ 448 0065 00       		.byte	0
+ 449 0066 07       		.uleb128 0x7
+ 450 0067 01       		.uleb128 0x1
+ 451 0068 01       		.byte	0x1
+ 452 0069 49       		.uleb128 0x49
+ 453 006a 13       		.uleb128 0x13
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 11
+
+
+ 454 006b 01       		.uleb128 0x1
+ 455 006c 13       		.uleb128 0x13
+ 456 006d 00       		.byte	0
+ 457 006e 00       		.byte	0
+ 458 006f 08       		.uleb128 0x8
+ 459 0070 21       		.uleb128 0x21
+ 460 0071 00       		.byte	0
+ 461 0072 49       		.uleb128 0x49
+ 462 0073 13       		.uleb128 0x13
+ 463 0074 2F       		.uleb128 0x2f
+ 464 0075 0B       		.uleb128 0xb
+ 465 0076 00       		.byte	0
+ 466 0077 00       		.byte	0
+ 467 0078 09       		.uleb128 0x9
+ 468 0079 34       		.uleb128 0x34
+ 469 007a 00       		.byte	0
+ 470 007b 03       		.uleb128 0x3
+ 471 007c 0E       		.uleb128 0xe
+ 472 007d 3A       		.uleb128 0x3a
+ 473 007e 0B       		.uleb128 0xb
+ 474 007f 3B       		.uleb128 0x3b
+ 475 0080 0B       		.uleb128 0xb
+ 476 0081 49       		.uleb128 0x49
+ 477 0082 13       		.uleb128 0x13
+ 478 0083 3F       		.uleb128 0x3f
+ 479 0084 19       		.uleb128 0x19
+ 480 0085 02       		.uleb128 0x2
+ 481 0086 18       		.uleb128 0x18
+ 482 0087 00       		.byte	0
+ 483 0088 00       		.byte	0
+ 484 0089 0A       		.uleb128 0xa
+ 485 008a 34       		.uleb128 0x34
+ 486 008b 00       		.byte	0
+ 487 008c 03       		.uleb128 0x3
+ 488 008d 08       		.uleb128 0x8
+ 489 008e 3A       		.uleb128 0x3a
+ 490 008f 0B       		.uleb128 0xb
+ 491 0090 3B       		.uleb128 0x3b
+ 492 0091 0B       		.uleb128 0xb
+ 493 0092 49       		.uleb128 0x49
+ 494 0093 13       		.uleb128 0x13
+ 495 0094 3F       		.uleb128 0x3f
+ 496 0095 19       		.uleb128 0x19
+ 497 0096 02       		.uleb128 0x2
+ 498 0097 18       		.uleb128 0x18
+ 499 0098 00       		.byte	0
+ 500 0099 00       		.byte	0
+ 501 009a 00       		.byte	0
+ 502              		.section	.debug_aranges,"",%progbits
+ 503 0000 24000000 		.4byte	0x24
+ 504 0004 0200     		.2byte	0x2
+ 505 0006 00000000 		.4byte	.Ldebug_info0
+ 506 000a 04       		.byte	0x4
+ 507 000b 00       		.byte	0
+ 508 000c 0000     		.2byte	0
+ 509 000e 0000     		.2byte	0
+ 510 0010 00000000 		.4byte	.LFB33
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 12
+
+
+ 511 0014 0C000000 		.4byte	.LFE33-.LFB33
+ 512 0018 00000000 		.4byte	.LFB34
+ 513 001c D4000000 		.4byte	.LFE34-.LFB34
+ 514 0020 00000000 		.4byte	0
+ 515 0024 00000000 		.4byte	0
+ 516              		.section	.debug_ranges,"",%progbits
+ 517              	.Ldebug_ranges0:
+ 518 0000 00000000 		.4byte	.LFB33
+ 519 0004 0C000000 		.4byte	.LFE33
+ 520 0008 00000000 		.4byte	.LFB34
+ 521 000c D4000000 		.4byte	.LFE34
+ 522 0010 00000000 		.4byte	0
+ 523 0014 00000000 		.4byte	0
+ 524              		.section	.debug_line,"",%progbits
+ 525              	.Ldebug_line0:
+ 526 0000 86000000 		.section	.debug_str,"MS",%progbits,1
+ 526      02004300 
+ 526      00000201 
+ 526      FB0E0D00 
+ 526      01010101 
+ 527              	.LASF6:
+ 528 0000 6C6F6E67 		.ascii	"long long int\000"
+ 528      206C6F6E 
+ 528      6720696E 
+ 528      7400
+ 529              	.LASF8:
+ 530 000e 756E7369 		.ascii	"unsigned int\000"
+ 530      676E6564 
+ 530      20696E74 
+ 530      00
+ 531              	.LASF1:
+ 532 001b 756E7369 		.ascii	"unsigned char\000"
+ 532      676E6564 
+ 532      20636861 
+ 532      7200
+ 533              	.LASF19:
+ 534 0029 74656D70 		.ascii	"temp\000"
+ 534      00
+ 535              	.LASF16:
+ 536 002e 6D61696E 		.ascii	"main\000"
+ 536      00
+ 537              	.LASF9:
+ 538 0033 75696E74 		.ascii	"uint8\000"
+ 538      3800
+ 539              	.LASF5:
+ 540 0039 6C6F6E67 		.ascii	"long unsigned int\000"
+ 540      20756E73 
+ 540      69676E65 
+ 540      6420696E 
+ 540      7400
+ 541              	.LASF7:
+ 542 004b 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 542      206C6F6E 
+ 542      6720756E 
+ 542      7369676E 
+ 542      65642069 
+ 543              	.LASF13:
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 13
+
+
+ 544 0062 63686172 		.ascii	"char\000"
+ 544      00
+ 545              	.LASF11:
+ 546 0067 666C6F61 		.ascii	"float\000"
+ 546      7400
+ 547              	.LASF18:
+ 548 006d 72666964 		.ascii	"rfid_data_received\000"
+ 548      5F646174 
+ 548      615F7265 
+ 548      63656976 
+ 548      656400
+ 549              	.LASF20:
+ 550 0080 474E5520 		.ascii	"GNU C 4.8.4 20140526 (release) [ARM/embedded-4_8-br"
+ 550      4320342E 
+ 550      382E3420 
+ 550      32303134 
+ 550      30353236 
+ 551 00b3 616E6368 		.ascii	"anch revision 211358] -mcpu=cortex-m0 -mthumb -g -O"
+ 551      20726576 
+ 551      6973696F 
+ 551      6E203231 
+ 551      31333538 
+ 552 00e6 30202D66 		.ascii	"0 -ffunction-sections\000"
+ 552      66756E63 
+ 552      74696F6E 
+ 552      2D736563 
+ 552      74696F6E 
+ 553              	.LASF15:
+ 554 00fc 52657365 		.ascii	"ResetISR_Handler\000"
+ 554      74495352 
+ 554      5F48616E 
+ 554      646C6572 
+ 554      00
+ 555              	.LASF22:
+ 556 010d 433A5C70 		.ascii	"C:\\psoc4\\Patrulator\\Patrulator.cydsn\000"
+ 556      736F6334 
+ 556      5C506174 
+ 556      72756C61 
+ 556      746F725C 
+ 557              	.LASF4:
+ 558 0132 6C6F6E67 		.ascii	"long int\000"
+ 558      20696E74 
+ 558      00
+ 559              	.LASF2:
+ 560 013b 73686F72 		.ascii	"short int\000"
+ 560      7420696E 
+ 560      7400
+ 561              	.LASF12:
+ 562 0145 646F7562 		.ascii	"double\000"
+ 562      6C6500
+ 563              	.LASF3:
+ 564 014c 73686F72 		.ascii	"short unsigned int\000"
+ 564      7420756E 
+ 564      7369676E 
+ 564      65642069 
+ 564      6E7400
+ 565              	.LASF0:
+ARM GAS  C:\Users\En\AppData\Local\Temp\cc0PK8Fj.s 			page 14
+
+
+ 566 015f 7369676E 		.ascii	"signed char\000"
+ 566      65642063 
+ 566      68617200 
+ 567              	.LASF14:
+ 568 016b 73697A65 		.ascii	"sizetype\000"
+ 568      74797065 
+ 568      00
+ 569              	.LASF21:
+ 570 0174 2E5C6D61 		.ascii	".\\main.c\000"
+ 570      696E2E63 
+ 570      00
+ 571              	.LASF10:
+ 572 017d 75696E74 		.ascii	"uint16\000"
+ 572      313600
+ 573              	.LASF17:
+ 574 0184 72666964 		.ascii	"rfid_data_u16\000"
+ 574      5F646174 
+ 574      615F7531 
+ 574      3600
+ 575              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-br

@@ -1,0 +1,880 @@
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"RFID_REG_PM.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.bss
+  18              		.align	2
+  19              	RFID_REG_backup:
+  20 0000 00000000 		.space	6
+  20      0000
+  21 0006 0000     		.section	.text.RFID_REG_SaveConfig,"ax",%progbits
+  22              		.align	2
+  23              		.global	RFID_REG_SaveConfig
+  24              		.code	16
+  25              		.thumb_func
+  26              		.type	RFID_REG_SaveConfig, %function
+  27              	RFID_REG_SaveConfig:
+  28              	.LFB0:
+  29              		.file 1 ".\\Generated_Source\\PSoC4\\RFID_REG_PM.c"
+   1:.\Generated_Source\PSoC4/RFID_REG_PM.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * File Name: RFID_REG_PM.c
+   3:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Version 2.30
+   4:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+   5:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Description:
+   6:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  This file provides the API source code for sleep mode support for Shift
+   7:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  Register component.
+   8:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+   9:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Note:
+  10:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  11:.\Generated_Source\PSoC4/RFID_REG_PM.c **** ********************************************************************************
+  12:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Copyright 2008-2013, Cypress Semiconductor Corporation.  All rights reserved.
+  13:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * You may use this file only in accordance with the license, terms, conditions,
+  14:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  15:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * the software package with which this file was provided.
+  16:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *******************************************************************************/
+  17:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  18:.\Generated_Source\PSoC4/RFID_REG_PM.c **** #include "RFID_REG.h"
+  19:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  20:.\Generated_Source\PSoC4/RFID_REG_PM.c **** static RFID_REG_BACKUP_STRUCT RFID_REG_backup =
+  21:.\Generated_Source\PSoC4/RFID_REG_PM.c **** {
+  22:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     RFID_REG_DISABLED,
+  23:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  24:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     ((uint16) RFID_REG_DEFAULT_A0),
+  25:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     ((uint16) RFID_REG_DEFAULT_A1),
+  26:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  27:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     #if(CY_UDB_V0)
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 2
+
+
+  28:.\Generated_Source\PSoC4/RFID_REG_PM.c ****         ((uint16) RFID_REG_INT_SRC),
+  29:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     #endif /* (CY_UDB_V0) */
+  30:.\Generated_Source\PSoC4/RFID_REG_PM.c **** };
+  31:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  32:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  33:.\Generated_Source\PSoC4/RFID_REG_PM.c **** /*******************************************************************************
+  34:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Function Name: RFID_REG_SaveConfig
+  35:.\Generated_Source\PSoC4/RFID_REG_PM.c **** ********************************************************************************
+  36:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  37:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Summary:
+  38:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  Saves Shift Register configuration.
+  39:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  40:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Parameters:
+  41:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  None.
+  42:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  43:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Return:
+  44:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  None.
+  45:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  46:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Reentrant:
+  47:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  No.
+  48:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  49:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *******************************************************************************/
+  50:.\Generated_Source\PSoC4/RFID_REG_PM.c **** void RFID_REG_SaveConfig(void) 
+  51:.\Generated_Source\PSoC4/RFID_REG_PM.c **** {
+  30              		.loc 1 51 0
+  31              		.cfi_startproc
+  32 0000 80B5     		push	{r7, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 7, -8
+  35              		.cfi_offset 14, -4
+  36 0002 00AF     		add	r7, sp, #0
+  37              		.cfi_def_cfa_register 7
+  52:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     /* Store working registers A0 and A1 */
+  53:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     RFID_REG_backup.saveSrA0Reg   = CY_GET_REG16(RFID_REG_SHIFT_REG_LSB_PTR);
+  38              		.loc 1 53 0
+  39 0004 054B     		ldr	r3, .L2
+  40 0006 1B88     		ldrh	r3, [r3]
+  41 0008 9AB2     		uxth	r2, r3
+  42 000a 054B     		ldr	r3, .L2+4
+  43 000c 5A80     		strh	r2, [r3, #2]
+  54:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     RFID_REG_backup.saveSrA1Reg   = CY_GET_REG16(RFID_REG_SHIFT_REG_VALUE_LSB_PTR);
+  44              		.loc 1 54 0
+  45 000e 054B     		ldr	r3, .L2+8
+  46 0010 1B88     		ldrh	r3, [r3]
+  47 0012 9AB2     		uxth	r2, r3
+  48 0014 024B     		ldr	r3, .L2+4
+  49 0016 9A80     		strh	r2, [r3, #4]
+  55:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  56:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     #if(CY_UDB_V0)
+  57:.\Generated_Source\PSoC4/RFID_REG_PM.c ****         RFID_REG_backup.saveSrIntMask = RFID_REG_SR_STATUS_MASK;
+  58:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     #endif /* (CY_UDB_V0) */
+  59:.\Generated_Source\PSoC4/RFID_REG_PM.c **** }
+  50              		.loc 1 59 0
+  51 0018 BD46     		mov	sp, r7
+  52              		@ sp needed
+  53 001a 80BD     		pop	{r7, pc}
+  54              	.L3:
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 3
+
+
+  55              		.align	2
+  56              	.L2:
+  57 001c 00100F40 		.word	1074728960
+  58 0020 00000000 		.word	RFID_REG_backup
+  59 0024 20100F40 		.word	1074728992
+  60              		.cfi_endproc
+  61              	.LFE0:
+  62              		.size	RFID_REG_SaveConfig, .-RFID_REG_SaveConfig
+  63              		.section	.text.RFID_REG_RestoreConfig,"ax",%progbits
+  64              		.align	2
+  65              		.global	RFID_REG_RestoreConfig
+  66              		.code	16
+  67              		.thumb_func
+  68              		.type	RFID_REG_RestoreConfig, %function
+  69              	RFID_REG_RestoreConfig:
+  70              	.LFB1:
+  60:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  61:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  62:.\Generated_Source\PSoC4/RFID_REG_PM.c **** /*******************************************************************************
+  63:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Function Name: RFID_REG_RestoreConfig
+  64:.\Generated_Source\PSoC4/RFID_REG_PM.c **** ********************************************************************************
+  65:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  66:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Summary:
+  67:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  Restores Shift Register configuration.
+  68:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  69:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Parameters:
+  70:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  None.
+  71:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  72:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Return:
+  73:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  None.
+  74:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  75:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *******************************************************************************/
+  76:.\Generated_Source\PSoC4/RFID_REG_PM.c **** void RFID_REG_RestoreConfig(void) 
+  77:.\Generated_Source\PSoC4/RFID_REG_PM.c **** {
+  71              		.loc 1 77 0
+  72              		.cfi_startproc
+  73 0000 80B5     		push	{r7, lr}
+  74              		.cfi_def_cfa_offset 8
+  75              		.cfi_offset 7, -8
+  76              		.cfi_offset 14, -4
+  77 0002 00AF     		add	r7, sp, #0
+  78              		.cfi_def_cfa_register 7
+  78:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     /* Restore working registers A0 and A1 */
+  79:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     CY_SET_REG16(RFID_REG_SHIFT_REG_LSB_PTR, RFID_REG_backup.saveSrA0Reg);
+  79              		.loc 1 79 0
+  80 0004 044B     		ldr	r3, .L5
+  81 0006 054A     		ldr	r2, .L5+4
+  82 0008 5288     		ldrh	r2, [r2, #2]
+  83 000a 1A80     		strh	r2, [r3]
+  80:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     CY_SET_REG16(RFID_REG_SHIFT_REG_VALUE_LSB_PTR, RFID_REG_backup.saveSrA1Reg);
+  84              		.loc 1 80 0
+  85 000c 044B     		ldr	r3, .L5+8
+  86 000e 034A     		ldr	r2, .L5+4
+  87 0010 9288     		ldrh	r2, [r2, #4]
+  88 0012 1A80     		strh	r2, [r3]
+  81:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  82:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     #if(CY_UDB_V0)
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 4
+
+
+  83:.\Generated_Source\PSoC4/RFID_REG_PM.c ****         RFID_REG_SR_STATUS_MASK = ((uint8) RFID_REG_backup.saveSrIntMask);
+  84:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     #endif /* (CY_UDB_V0) */
+  85:.\Generated_Source\PSoC4/RFID_REG_PM.c **** }
+  89              		.loc 1 85 0
+  90 0014 BD46     		mov	sp, r7
+  91              		@ sp needed
+  92 0016 80BD     		pop	{r7, pc}
+  93              	.L6:
+  94              		.align	2
+  95              	.L5:
+  96 0018 00100F40 		.word	1074728960
+  97 001c 00000000 		.word	RFID_REG_backup
+  98 0020 20100F40 		.word	1074728992
+  99              		.cfi_endproc
+ 100              	.LFE1:
+ 101              		.size	RFID_REG_RestoreConfig, .-RFID_REG_RestoreConfig
+ 102              		.section	.text.RFID_REG_Sleep,"ax",%progbits
+ 103              		.align	2
+ 104              		.global	RFID_REG_Sleep
+ 105              		.code	16
+ 106              		.thumb_func
+ 107              		.type	RFID_REG_Sleep, %function
+ 108              	RFID_REG_Sleep:
+ 109              	.LFB2:
+  86:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  87:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+  88:.\Generated_Source\PSoC4/RFID_REG_PM.c **** /*******************************************************************************
+  89:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Function Name: RFID_REG_Sleep
+  90:.\Generated_Source\PSoC4/RFID_REG_PM.c **** ********************************************************************************
+  91:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  92:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Summary:
+  93:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  Prepare the component to enter a Sleep mode.
+  94:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  95:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Parameters:
+  96:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  None.
+  97:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+  98:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Return:
+  99:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  None.
+ 100:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+ 101:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Reentrant:
+ 102:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  No.
+ 103:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+ 104:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *******************************************************************************/
+ 105:.\Generated_Source\PSoC4/RFID_REG_PM.c **** void RFID_REG_Sleep(void) 
+ 106:.\Generated_Source\PSoC4/RFID_REG_PM.c **** {
+ 110              		.loc 1 106 0
+ 111              		.cfi_startproc
+ 112 0000 80B5     		push	{r7, lr}
+ 113              		.cfi_def_cfa_offset 8
+ 114              		.cfi_offset 7, -8
+ 115              		.cfi_offset 14, -4
+ 116 0002 00AF     		add	r7, sp, #0
+ 117              		.cfi_def_cfa_register 7
+ 107:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     RFID_REG_backup.enableState = ((uint8) RFID_REG_IS_ENABLED);
+ 118              		.loc 1 107 0
+ 119 0004 084B     		ldr	r3, .L8
+ 120 0006 1B78     		ldrb	r3, [r3]
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 5
+
+
+ 121 0008 DBB2     		uxtb	r3, r3
+ 122 000a 1A1C     		mov	r2, r3
+ 123 000c 0123     		mov	r3, #1
+ 124 000e 1340     		and	r3, r2
+ 125 0010 5A1E     		sub	r2, r3, #1
+ 126 0012 9341     		sbc	r3, r3, r2
+ 127 0014 DBB2     		uxtb	r3, r3
+ 128 0016 1A1C     		mov	r2, r3
+ 129 0018 044B     		ldr	r3, .L8+4
+ 130 001a 1A70     		strb	r2, [r3]
+ 108:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+ 109:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     RFID_REG_Stop();
+ 131              		.loc 1 109 0
+ 132 001c FFF7FEFF 		bl	RFID_REG_Stop
+ 110:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     RFID_REG_SaveConfig();
+ 133              		.loc 1 110 0
+ 134 0020 FFF7FEFF 		bl	RFID_REG_SaveConfig
+ 111:.\Generated_Source\PSoC4/RFID_REG_PM.c **** }
+ 135              		.loc 1 111 0
+ 136 0024 BD46     		mov	sp, r7
+ 137              		@ sp needed
+ 138 0026 80BD     		pop	{r7, pc}
+ 139              	.L9:
+ 140              		.align	2
+ 141              	.L8:
+ 142 0028 70000F40 		.word	1074724976
+ 143 002c 00000000 		.word	RFID_REG_backup
+ 144              		.cfi_endproc
+ 145              	.LFE2:
+ 146              		.size	RFID_REG_Sleep, .-RFID_REG_Sleep
+ 147              		.section	.text.RFID_REG_Wakeup,"ax",%progbits
+ 148              		.align	2
+ 149              		.global	RFID_REG_Wakeup
+ 150              		.code	16
+ 151              		.thumb_func
+ 152              		.type	RFID_REG_Wakeup, %function
+ 153              	RFID_REG_Wakeup:
+ 154              	.LFB3:
+ 112:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+ 113:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+ 114:.\Generated_Source\PSoC4/RFID_REG_PM.c **** /*******************************************************************************
+ 115:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Function Name: RFID_REG_Wakeup
+ 116:.\Generated_Source\PSoC4/RFID_REG_PM.c **** ********************************************************************************
+ 117:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+ 118:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Summary:
+ 119:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  Restores and enables the user configuration.
+ 120:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+ 121:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Parameters:
+ 122:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  None.
+ 123:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+ 124:.\Generated_Source\PSoC4/RFID_REG_PM.c **** * Return:
+ 125:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *  None.
+ 126:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *
+ 127:.\Generated_Source\PSoC4/RFID_REG_PM.c **** *******************************************************************************/
+ 128:.\Generated_Source\PSoC4/RFID_REG_PM.c **** void RFID_REG_Wakeup(void) 
+ 129:.\Generated_Source\PSoC4/RFID_REG_PM.c **** {
+ 155              		.loc 1 129 0
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 6
+
+
+ 156              		.cfi_startproc
+ 157 0000 80B5     		push	{r7, lr}
+ 158              		.cfi_def_cfa_offset 8
+ 159              		.cfi_offset 7, -8
+ 160              		.cfi_offset 14, -4
+ 161 0002 00AF     		add	r7, sp, #0
+ 162              		.cfi_def_cfa_register 7
+ 130:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     RFID_REG_RestoreConfig();
+ 163              		.loc 1 130 0
+ 164 0004 FFF7FEFF 		bl	RFID_REG_RestoreConfig
+ 131:.\Generated_Source\PSoC4/RFID_REG_PM.c **** 
+ 132:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     if(0u != RFID_REG_backup.enableState)
+ 165              		.loc 1 132 0
+ 166 0008 034B     		ldr	r3, .L12
+ 167 000a 1B78     		ldrb	r3, [r3]
+ 168 000c 002B     		cmp	r3, #0
+ 169 000e 01D0     		beq	.L10
+ 133:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     {
+ 134:.\Generated_Source\PSoC4/RFID_REG_PM.c ****         RFID_REG_Enable();
+ 170              		.loc 1 134 0
+ 171 0010 FFF7FEFF 		bl	RFID_REG_Enable
+ 172              	.L10:
+ 135:.\Generated_Source\PSoC4/RFID_REG_PM.c ****     }
+ 136:.\Generated_Source\PSoC4/RFID_REG_PM.c **** }
+ 173              		.loc 1 136 0
+ 174 0014 BD46     		mov	sp, r7
+ 175              		@ sp needed
+ 176 0016 80BD     		pop	{r7, pc}
+ 177              	.L13:
+ 178              		.align	2
+ 179              	.L12:
+ 180 0018 00000000 		.word	RFID_REG_backup
+ 181              		.cfi_endproc
+ 182              	.LFE3:
+ 183              		.size	RFID_REG_Wakeup, .-RFID_REG_Wakeup
+ 184              		.text
+ 185              	.Letext0:
+ 186              		.file 2 ".\\Generated_Source\\PSoC4\\cytypes.h"
+ 187              		.file 3 ".\\Generated_Source\\PSoC4\\RFID_REG.h"
+ 188              		.section	.debug_info,"",%progbits
+ 189              	.Ldebug_info0:
+ 190 0000 49010000 		.4byte	0x149
+ 191 0004 0400     		.2byte	0x4
+ 192 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 193 000a 04       		.byte	0x4
+ 194 000b 01       		.uleb128 0x1
+ 195 000c 9D000000 		.4byte	.LASF25
+ 196 0010 01       		.byte	0x1
+ 197 0011 87010000 		.4byte	.LASF26
+ 198 0015 3B010000 		.4byte	.LASF27
+ 199 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 200 001d 00000000 		.4byte	0
+ 201 0021 00000000 		.4byte	.Ldebug_line0
+ 202 0025 02       		.uleb128 0x2
+ 203 0026 01       		.byte	0x1
+ 204 0027 06       		.byte	0x6
+ 205 0028 D1010000 		.4byte	.LASF0
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 7
+
+
+ 206 002c 02       		.uleb128 0x2
+ 207 002d 01       		.byte	0x1
+ 208 002e 08       		.byte	0x8
+ 209 002f 2D010000 		.4byte	.LASF1
+ 210 0033 02       		.uleb128 0x2
+ 211 0034 02       		.byte	0x2
+ 212 0035 05       		.byte	0x5
+ 213 0036 E3010000 		.4byte	.LASF2
+ 214 003a 02       		.uleb128 0x2
+ 215 003b 02       		.byte	0x2
+ 216 003c 07       		.byte	0x7
+ 217 003d BE010000 		.4byte	.LASF3
+ 218 0041 02       		.uleb128 0x2
+ 219 0042 04       		.byte	0x4
+ 220 0043 05       		.byte	0x5
+ 221 0044 60010000 		.4byte	.LASF4
+ 222 0048 02       		.uleb128 0x2
+ 223 0049 04       		.byte	0x4
+ 224 004a 07       		.byte	0x7
+ 225 004b 5F000000 		.4byte	.LASF5
+ 226 004f 02       		.uleb128 0x2
+ 227 0050 08       		.byte	0x8
+ 228 0051 05       		.byte	0x5
+ 229 0052 00000000 		.4byte	.LASF6
+ 230 0056 02       		.uleb128 0x2
+ 231 0057 08       		.byte	0x8
+ 232 0058 07       		.byte	0x7
+ 233 0059 71000000 		.4byte	.LASF7
+ 234 005d 03       		.uleb128 0x3
+ 235 005e 04       		.byte	0x4
+ 236 005f 05       		.byte	0x5
+ 237 0060 696E7400 		.ascii	"int\000"
+ 238 0064 02       		.uleb128 0x2
+ 239 0065 04       		.byte	0x4
+ 240 0066 07       		.byte	0x7
+ 241 0067 25000000 		.4byte	.LASF8
+ 242 006b 04       		.uleb128 0x4
+ 243 006c 59000000 		.4byte	.LASF9
+ 244 0070 02       		.byte	0x2
+ 245 0071 B3       		.byte	0xb3
+ 246 0072 2C000000 		.4byte	0x2c
+ 247 0076 04       		.uleb128 0x4
+ 248 0077 ED010000 		.4byte	.LASF10
+ 249 007b 02       		.byte	0x2
+ 250 007c B4       		.byte	0xb4
+ 251 007d 3A000000 		.4byte	0x3a
+ 252 0081 02       		.uleb128 0x2
+ 253 0082 04       		.byte	0x4
+ 254 0083 04       		.byte	0x4
+ 255 0084 DD010000 		.4byte	.LASF11
+ 256 0088 02       		.uleb128 0x2
+ 257 0089 08       		.byte	0x8
+ 258 008a 04       		.byte	0x4
+ 259 008b 80010000 		.4byte	.LASF12
+ 260 008f 02       		.uleb128 0x2
+ 261 0090 01       		.byte	0x1
+ 262 0091 08       		.byte	0x8
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 8
+
+
+ 263 0092 88000000 		.4byte	.LASF13
+ 264 0096 05       		.uleb128 0x5
+ 265 0097 69010000 		.4byte	.LASF14
+ 266 009b 02       		.byte	0x2
+ 267 009c 5D01     		.2byte	0x15d
+ 268 009e A2000000 		.4byte	0xa2
+ 269 00a2 06       		.uleb128 0x6
+ 270 00a3 6B000000 		.4byte	0x6b
+ 271 00a7 05       		.uleb128 0x5
+ 272 00a8 6E010000 		.4byte	.LASF15
+ 273 00ac 02       		.byte	0x2
+ 274 00ad 5E01     		.2byte	0x15e
+ 275 00af B3000000 		.4byte	0xb3
+ 276 00b3 06       		.uleb128 0x6
+ 277 00b4 76000000 		.4byte	0x76
+ 278 00b8 02       		.uleb128 0x2
+ 279 00b9 04       		.byte	0x4
+ 280 00ba 07       		.byte	0x7
+ 281 00bb 0B020000 		.4byte	.LASF16
+ 282 00bf 07       		.uleb128 0x7
+ 283 00c0 06       		.byte	0x6
+ 284 00c1 03       		.byte	0x3
+ 285 00c2 30       		.byte	0x30
+ 286 00c3 EC000000 		.4byte	0xec
+ 287 00c7 08       		.uleb128 0x8
+ 288 00c8 74010000 		.4byte	.LASF17
+ 289 00cc 03       		.byte	0x3
+ 290 00cd 32       		.byte	0x32
+ 291 00ce 6B000000 		.4byte	0x6b
+ 292 00d2 00       		.byte	0
+ 293 00d3 08       		.uleb128 0x8
+ 294 00d4 4D000000 		.4byte	.LASF18
+ 295 00d8 03       		.byte	0x3
+ 296 00d9 34       		.byte	0x34
+ 297 00da 76000000 		.4byte	0x76
+ 298 00de 02       		.byte	0x2
+ 299 00df 08       		.uleb128 0x8
+ 300 00e0 32000000 		.4byte	.LASF19
+ 301 00e4 03       		.byte	0x3
+ 302 00e5 35       		.byte	0x35
+ 303 00e6 76000000 		.4byte	0x76
+ 304 00ea 04       		.byte	0x4
+ 305 00eb 00       		.byte	0
+ 306 00ec 04       		.uleb128 0x4
+ 307 00ed 0E000000 		.4byte	.LASF20
+ 308 00f1 03       		.byte	0x3
+ 309 00f2 3B       		.byte	0x3b
+ 310 00f3 BF000000 		.4byte	0xbf
+ 311 00f7 09       		.uleb128 0x9
+ 312 00f8 19010000 		.4byte	.LASF21
+ 313 00fc 01       		.byte	0x1
+ 314 00fd 32       		.byte	0x32
+ 315 00fe 00000000 		.4byte	.LFB0
+ 316 0102 28000000 		.4byte	.LFE0-.LFB0
+ 317 0106 01       		.uleb128 0x1
+ 318 0107 9C       		.byte	0x9c
+ 319 0108 09       		.uleb128 0x9
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 9
+
+
+ 320 0109 F4010000 		.4byte	.LASF22
+ 321 010d 01       		.byte	0x1
+ 322 010e 4C       		.byte	0x4c
+ 323 010f 00000000 		.4byte	.LFB1
+ 324 0113 24000000 		.4byte	.LFE1-.LFB1
+ 325 0117 01       		.uleb128 0x1
+ 326 0118 9C       		.byte	0x9c
+ 327 0119 0A       		.uleb128 0xa
+ 328 011a 3E000000 		.4byte	.LASF23
+ 329 011e 01       		.byte	0x1
+ 330 011f 69       		.byte	0x69
+ 331 0120 00000000 		.4byte	.LFB2
+ 332 0124 30000000 		.4byte	.LFE2-.LFB2
+ 333 0128 01       		.uleb128 0x1
+ 334 0129 9C       		.byte	0x9c
+ 335 012a 0A       		.uleb128 0xa
+ 336 012b AE010000 		.4byte	.LASF24
+ 337 012f 01       		.byte	0x1
+ 338 0130 80       		.byte	0x80
+ 339 0131 00000000 		.4byte	.LFB3
+ 340 0135 1C000000 		.4byte	.LFE3-.LFB3
+ 341 0139 01       		.uleb128 0x1
+ 342 013a 9C       		.byte	0x9c
+ 343 013b 0B       		.uleb128 0xb
+ 344 013c 8D000000 		.4byte	.LASF28
+ 345 0140 01       		.byte	0x1
+ 346 0141 14       		.byte	0x14
+ 347 0142 EC000000 		.4byte	0xec
+ 348 0146 05       		.uleb128 0x5
+ 349 0147 03       		.byte	0x3
+ 350 0148 00000000 		.4byte	RFID_REG_backup
+ 351 014c 00       		.byte	0
+ 352              		.section	.debug_abbrev,"",%progbits
+ 353              	.Ldebug_abbrev0:
+ 354 0000 01       		.uleb128 0x1
+ 355 0001 11       		.uleb128 0x11
+ 356 0002 01       		.byte	0x1
+ 357 0003 25       		.uleb128 0x25
+ 358 0004 0E       		.uleb128 0xe
+ 359 0005 13       		.uleb128 0x13
+ 360 0006 0B       		.uleb128 0xb
+ 361 0007 03       		.uleb128 0x3
+ 362 0008 0E       		.uleb128 0xe
+ 363 0009 1B       		.uleb128 0x1b
+ 364 000a 0E       		.uleb128 0xe
+ 365 000b 55       		.uleb128 0x55
+ 366 000c 17       		.uleb128 0x17
+ 367 000d 11       		.uleb128 0x11
+ 368 000e 01       		.uleb128 0x1
+ 369 000f 10       		.uleb128 0x10
+ 370 0010 17       		.uleb128 0x17
+ 371 0011 00       		.byte	0
+ 372 0012 00       		.byte	0
+ 373 0013 02       		.uleb128 0x2
+ 374 0014 24       		.uleb128 0x24
+ 375 0015 00       		.byte	0
+ 376 0016 0B       		.uleb128 0xb
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 10
+
+
+ 377 0017 0B       		.uleb128 0xb
+ 378 0018 3E       		.uleb128 0x3e
+ 379 0019 0B       		.uleb128 0xb
+ 380 001a 03       		.uleb128 0x3
+ 381 001b 0E       		.uleb128 0xe
+ 382 001c 00       		.byte	0
+ 383 001d 00       		.byte	0
+ 384 001e 03       		.uleb128 0x3
+ 385 001f 24       		.uleb128 0x24
+ 386 0020 00       		.byte	0
+ 387 0021 0B       		.uleb128 0xb
+ 388 0022 0B       		.uleb128 0xb
+ 389 0023 3E       		.uleb128 0x3e
+ 390 0024 0B       		.uleb128 0xb
+ 391 0025 03       		.uleb128 0x3
+ 392 0026 08       		.uleb128 0x8
+ 393 0027 00       		.byte	0
+ 394 0028 00       		.byte	0
+ 395 0029 04       		.uleb128 0x4
+ 396 002a 16       		.uleb128 0x16
+ 397 002b 00       		.byte	0
+ 398 002c 03       		.uleb128 0x3
+ 399 002d 0E       		.uleb128 0xe
+ 400 002e 3A       		.uleb128 0x3a
+ 401 002f 0B       		.uleb128 0xb
+ 402 0030 3B       		.uleb128 0x3b
+ 403 0031 0B       		.uleb128 0xb
+ 404 0032 49       		.uleb128 0x49
+ 405 0033 13       		.uleb128 0x13
+ 406 0034 00       		.byte	0
+ 407 0035 00       		.byte	0
+ 408 0036 05       		.uleb128 0x5
+ 409 0037 16       		.uleb128 0x16
+ 410 0038 00       		.byte	0
+ 411 0039 03       		.uleb128 0x3
+ 412 003a 0E       		.uleb128 0xe
+ 413 003b 3A       		.uleb128 0x3a
+ 414 003c 0B       		.uleb128 0xb
+ 415 003d 3B       		.uleb128 0x3b
+ 416 003e 05       		.uleb128 0x5
+ 417 003f 49       		.uleb128 0x49
+ 418 0040 13       		.uleb128 0x13
+ 419 0041 00       		.byte	0
+ 420 0042 00       		.byte	0
+ 421 0043 06       		.uleb128 0x6
+ 422 0044 35       		.uleb128 0x35
+ 423 0045 00       		.byte	0
+ 424 0046 49       		.uleb128 0x49
+ 425 0047 13       		.uleb128 0x13
+ 426 0048 00       		.byte	0
+ 427 0049 00       		.byte	0
+ 428 004a 07       		.uleb128 0x7
+ 429 004b 13       		.uleb128 0x13
+ 430 004c 01       		.byte	0x1
+ 431 004d 0B       		.uleb128 0xb
+ 432 004e 0B       		.uleb128 0xb
+ 433 004f 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 11
+
+
+ 434 0050 0B       		.uleb128 0xb
+ 435 0051 3B       		.uleb128 0x3b
+ 436 0052 0B       		.uleb128 0xb
+ 437 0053 01       		.uleb128 0x1
+ 438 0054 13       		.uleb128 0x13
+ 439 0055 00       		.byte	0
+ 440 0056 00       		.byte	0
+ 441 0057 08       		.uleb128 0x8
+ 442 0058 0D       		.uleb128 0xd
+ 443 0059 00       		.byte	0
+ 444 005a 03       		.uleb128 0x3
+ 445 005b 0E       		.uleb128 0xe
+ 446 005c 3A       		.uleb128 0x3a
+ 447 005d 0B       		.uleb128 0xb
+ 448 005e 3B       		.uleb128 0x3b
+ 449 005f 0B       		.uleb128 0xb
+ 450 0060 49       		.uleb128 0x49
+ 451 0061 13       		.uleb128 0x13
+ 452 0062 38       		.uleb128 0x38
+ 453 0063 0B       		.uleb128 0xb
+ 454 0064 00       		.byte	0
+ 455 0065 00       		.byte	0
+ 456 0066 09       		.uleb128 0x9
+ 457 0067 2E       		.uleb128 0x2e
+ 458 0068 00       		.byte	0
+ 459 0069 3F       		.uleb128 0x3f
+ 460 006a 19       		.uleb128 0x19
+ 461 006b 03       		.uleb128 0x3
+ 462 006c 0E       		.uleb128 0xe
+ 463 006d 3A       		.uleb128 0x3a
+ 464 006e 0B       		.uleb128 0xb
+ 465 006f 3B       		.uleb128 0x3b
+ 466 0070 0B       		.uleb128 0xb
+ 467 0071 27       		.uleb128 0x27
+ 468 0072 19       		.uleb128 0x19
+ 469 0073 11       		.uleb128 0x11
+ 470 0074 01       		.uleb128 0x1
+ 471 0075 12       		.uleb128 0x12
+ 472 0076 06       		.uleb128 0x6
+ 473 0077 40       		.uleb128 0x40
+ 474 0078 18       		.uleb128 0x18
+ 475 0079 9742     		.uleb128 0x2117
+ 476 007b 19       		.uleb128 0x19
+ 477 007c 00       		.byte	0
+ 478 007d 00       		.byte	0
+ 479 007e 0A       		.uleb128 0xa
+ 480 007f 2E       		.uleb128 0x2e
+ 481 0080 00       		.byte	0
+ 482 0081 3F       		.uleb128 0x3f
+ 483 0082 19       		.uleb128 0x19
+ 484 0083 03       		.uleb128 0x3
+ 485 0084 0E       		.uleb128 0xe
+ 486 0085 3A       		.uleb128 0x3a
+ 487 0086 0B       		.uleb128 0xb
+ 488 0087 3B       		.uleb128 0x3b
+ 489 0088 0B       		.uleb128 0xb
+ 490 0089 27       		.uleb128 0x27
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 12
+
+
+ 491 008a 19       		.uleb128 0x19
+ 492 008b 11       		.uleb128 0x11
+ 493 008c 01       		.uleb128 0x1
+ 494 008d 12       		.uleb128 0x12
+ 495 008e 06       		.uleb128 0x6
+ 496 008f 40       		.uleb128 0x40
+ 497 0090 18       		.uleb128 0x18
+ 498 0091 9642     		.uleb128 0x2116
+ 499 0093 19       		.uleb128 0x19
+ 500 0094 00       		.byte	0
+ 501 0095 00       		.byte	0
+ 502 0096 0B       		.uleb128 0xb
+ 503 0097 34       		.uleb128 0x34
+ 504 0098 00       		.byte	0
+ 505 0099 03       		.uleb128 0x3
+ 506 009a 0E       		.uleb128 0xe
+ 507 009b 3A       		.uleb128 0x3a
+ 508 009c 0B       		.uleb128 0xb
+ 509 009d 3B       		.uleb128 0x3b
+ 510 009e 0B       		.uleb128 0xb
+ 511 009f 49       		.uleb128 0x49
+ 512 00a0 13       		.uleb128 0x13
+ 513 00a1 02       		.uleb128 0x2
+ 514 00a2 18       		.uleb128 0x18
+ 515 00a3 00       		.byte	0
+ 516 00a4 00       		.byte	0
+ 517 00a5 00       		.byte	0
+ 518              		.section	.debug_aranges,"",%progbits
+ 519 0000 34000000 		.4byte	0x34
+ 520 0004 0200     		.2byte	0x2
+ 521 0006 00000000 		.4byte	.Ldebug_info0
+ 522 000a 04       		.byte	0x4
+ 523 000b 00       		.byte	0
+ 524 000c 0000     		.2byte	0
+ 525 000e 0000     		.2byte	0
+ 526 0010 00000000 		.4byte	.LFB0
+ 527 0014 28000000 		.4byte	.LFE0-.LFB0
+ 528 0018 00000000 		.4byte	.LFB1
+ 529 001c 24000000 		.4byte	.LFE1-.LFB1
+ 530 0020 00000000 		.4byte	.LFB2
+ 531 0024 30000000 		.4byte	.LFE2-.LFB2
+ 532 0028 00000000 		.4byte	.LFB3
+ 533 002c 1C000000 		.4byte	.LFE3-.LFB3
+ 534 0030 00000000 		.4byte	0
+ 535 0034 00000000 		.4byte	0
+ 536              		.section	.debug_ranges,"",%progbits
+ 537              	.Ldebug_ranges0:
+ 538 0000 00000000 		.4byte	.LFB0
+ 539 0004 28000000 		.4byte	.LFE0
+ 540 0008 00000000 		.4byte	.LFB1
+ 541 000c 24000000 		.4byte	.LFE1
+ 542 0010 00000000 		.4byte	.LFB2
+ 543 0014 30000000 		.4byte	.LFE2
+ 544 0018 00000000 		.4byte	.LFB3
+ 545 001c 1C000000 		.4byte	.LFE3
+ 546 0020 00000000 		.4byte	0
+ 547 0024 00000000 		.4byte	0
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 13
+
+
+ 548              		.section	.debug_line,"",%progbits
+ 549              	.Ldebug_line0:
+ 550 0000 AB000000 		.section	.debug_str,"MS",%progbits,1
+ 550      02005800 
+ 550      00000201 
+ 550      FB0E0D00 
+ 550      01010101 
+ 551              	.LASF6:
+ 552 0000 6C6F6E67 		.ascii	"long long int\000"
+ 552      206C6F6E 
+ 552      6720696E 
+ 552      7400
+ 553              	.LASF20:
+ 554 000e 52464944 		.ascii	"RFID_REG_BACKUP_STRUCT\000"
+ 554      5F524547 
+ 554      5F424143 
+ 554      4B55505F 
+ 554      53545255 
+ 555              	.LASF8:
+ 556 0025 756E7369 		.ascii	"unsigned int\000"
+ 556      676E6564 
+ 556      20696E74 
+ 556      00
+ 557              	.LASF19:
+ 558 0032 73617665 		.ascii	"saveSrA1Reg\000"
+ 558      53724131 
+ 558      52656700 
+ 559              	.LASF23:
+ 560 003e 52464944 		.ascii	"RFID_REG_Sleep\000"
+ 560      5F524547 
+ 560      5F536C65 
+ 560      657000
+ 561              	.LASF18:
+ 562 004d 73617665 		.ascii	"saveSrA0Reg\000"
+ 562      53724130 
+ 562      52656700 
+ 563              	.LASF9:
+ 564 0059 75696E74 		.ascii	"uint8\000"
+ 564      3800
+ 565              	.LASF5:
+ 566 005f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 566      20756E73 
+ 566      69676E65 
+ 566      6420696E 
+ 566      7400
+ 567              	.LASF7:
+ 568 0071 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 568      206C6F6E 
+ 568      6720756E 
+ 568      7369676E 
+ 568      65642069 
+ 569              	.LASF13:
+ 570 0088 63686172 		.ascii	"char\000"
+ 570      00
+ 571              	.LASF28:
+ 572 008d 52464944 		.ascii	"RFID_REG_backup\000"
+ 572      5F524547 
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 14
+
+
+ 572      5F626163 
+ 572      6B757000 
+ 573              	.LASF25:
+ 574 009d 474E5520 		.ascii	"GNU C 4.8.4 20140526 (release) [ARM/embedded-4_8-br"
+ 574      4320342E 
+ 574      382E3420 
+ 574      32303134 
+ 574      30353236 
+ 575 00d0 616E6368 		.ascii	"anch revision 211358] -mcpu=cortex-m0 -mthumb -g -O"
+ 575      20726576 
+ 575      6973696F 
+ 575      6E203231 
+ 575      31333538 
+ 576 0103 30202D66 		.ascii	"0 -ffunction-sections\000"
+ 576      66756E63 
+ 576      74696F6E 
+ 576      2D736563 
+ 576      74696F6E 
+ 577              	.LASF21:
+ 578 0119 52464944 		.ascii	"RFID_REG_SaveConfig\000"
+ 578      5F524547 
+ 578      5F536176 
+ 578      65436F6E 
+ 578      66696700 
+ 579              	.LASF1:
+ 580 012d 756E7369 		.ascii	"unsigned char\000"
+ 580      676E6564 
+ 580      20636861 
+ 580      7200
+ 581              	.LASF27:
+ 582 013b 433A5C70 		.ascii	"C:\\psoc4\\Patrulator\\Patrulator.cydsn\000"
+ 582      736F6334 
+ 582      5C506174 
+ 582      72756C61 
+ 582      746F725C 
+ 583              	.LASF4:
+ 584 0160 6C6F6E67 		.ascii	"long int\000"
+ 584      20696E74 
+ 584      00
+ 585              	.LASF14:
+ 586 0169 72656738 		.ascii	"reg8\000"
+ 586      00
+ 587              	.LASF15:
+ 588 016e 72656731 		.ascii	"reg16\000"
+ 588      3600
+ 589              	.LASF17:
+ 590 0174 656E6162 		.ascii	"enableState\000"
+ 590      6C655374 
+ 590      61746500 
+ 591              	.LASF12:
+ 592 0180 646F7562 		.ascii	"double\000"
+ 592      6C6500
+ 593              	.LASF26:
+ 594 0187 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\RFID_REG_PM.c\000"
+ 594      6E657261 
+ 594      7465645F 
+ 594      536F7572 
+ARM GAS  C:\Users\En\AppData\Local\Temp\ccBI3sLf.s 			page 15
+
+
+ 594      63655C50 
+ 595              	.LASF24:
+ 596 01ae 52464944 		.ascii	"RFID_REG_Wakeup\000"
+ 596      5F524547 
+ 596      5F57616B 
+ 596      65757000 
+ 597              	.LASF3:
+ 598 01be 73686F72 		.ascii	"short unsigned int\000"
+ 598      7420756E 
+ 598      7369676E 
+ 598      65642069 
+ 598      6E7400
+ 599              	.LASF0:
+ 600 01d1 7369676E 		.ascii	"signed char\000"
+ 600      65642063 
+ 600      68617200 
+ 601              	.LASF11:
+ 602 01dd 666C6F61 		.ascii	"float\000"
+ 602      7400
+ 603              	.LASF2:
+ 604 01e3 73686F72 		.ascii	"short int\000"
+ 604      7420696E 
+ 604      7400
+ 605              	.LASF10:
+ 606 01ed 75696E74 		.ascii	"uint16\000"
+ 606      313600
+ 607              	.LASF22:
+ 608 01f4 52464944 		.ascii	"RFID_REG_RestoreConfig\000"
+ 608      5F524547 
+ 608      5F526573 
+ 608      746F7265 
+ 608      436F6E66 
+ 609              	.LASF16:
+ 610 020b 73697A65 		.ascii	"sizetype\000"
+ 610      74797065 
+ 610      00
+ 611              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-br

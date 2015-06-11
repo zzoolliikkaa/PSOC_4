@@ -1,0 +1,20 @@
+Loading plugins phase: Elapsed time ==> 0s.796ms
+Initializing data phase: Elapsed time ==> 0s.000ms
+<CYPRESSTAG name="CyDsfit arguments...">
+cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p D:\PSoC Creator\Patrulator\Patrulator.cydsn\Patrulator.cyprj -d CY8C3244AXA-153 -s D:\PSoC Creator\Patrulator\Patrulator.cydsn\Generated_Source\PSoC3 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=BE</CYPRESSTAG>
+<CYPRESSTAG name="Design elaboration results...">
+ADD: sdb.M0058: error: Unable to find Verilog, schematic or API implementation for block 'TCPWM_P4_v2_0' in schematic 'TopDesign'.
+ * D:\PSoC Creator\Patrulator\Patrulator.cydsn\TopDesign\TopDesign.cysch (Instance:Reset_Timer)
+
+ADD: pft.M0025: error: Clock Error: (Unable to find source clock 'HFCLK' for 'Clock_3MHz'.).
+ * D:\PSoC Creator\Patrulator\Patrulator.cydsn\Patrulator.cydwr (Clock_3MHz)
+ * D:\PSoC Creator\Patrulator\Patrulator.cydsn\TopDesign\TopDesign.cysch (Instance:Clock_3MHz)
+
+ADD: pft.M0084: error: A Bootloadable component was discovered in a project configured as a Normal project. Conflicting components are: Bootloadable. Remove the conflicting components or change the Application Type in the Build Settings dialog.
+ * D:\PSoC Creator\Patrulator\Patrulator.cydsn\TopDesign\TopDesign.cysch (Instance:Bootloadable)
+
+ADD: sdb.M0059: error: Error in component: Reset_Timer. PSoC 3 does not have support for the TCPWM functionality, so this component (Reset_Timer) cannot be used with this Architecture.
+ * D:\PSoC Creator\Patrulator\Patrulator.cydsn\TopDesign\TopDesign.cysch (Instance:Reset_Timer)
+
+</CYPRESSTAG>
+Elaboration phase: Elapsed time ==> 46s.313ms
